@@ -16,14 +16,14 @@ io.on('connection', (socket)=>{
 	console.log('new user connected');
 
 	socket.emit('newMessage',generateMessage('admin', 'welcome chat api'));
-		socket.broadcast.emit('newMessage',generateMessage('admin', 'connected new user'));
-	socket.on('createMessage', (message)=>{
-		// io.emit('newMessage', {
-		// 	from:message.from,
-		// 	to:message.to,
-		// 	cratedAt:new Date().getTime()
-		// });
-		socket.broadcast.emit('newMessage', generateMessage(message.from, message.to));
+	socket.broadcast.emit('newMessage',generateMessage('admin', 'connected new user'));
+
+	socket.on('createMessage', (message, callback)=>{
+		console.log(message);
+
+		io.emit('newMessage', generateMessage(message.from, message.to));
+		callback('this is from server');
+		// socket.broadcast.emit('newMessage', generateMessage(message.from, message.to));
 	});
 
 	socket.on('disconnect', ()=>{

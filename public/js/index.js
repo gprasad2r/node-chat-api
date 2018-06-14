@@ -8,5 +8,19 @@ var socket = io();
 			});
 
 			socket.on('newMessage', function(message){
-				console.log(message);
+				var li = jQuery('<li></li>');
+				li.text(`${message.from} : ${message.to}`);
+				jQuery('#messages').append(li);
+			});
+
+			jQuery('#message-form').on('submit', function (e) {
+				e.preventDefault();
+
+				socket.emit('createMessage', {
+					from :'user',
+					to:jQuery('[name=message]').val()
+				}, function(){
+					console.log('from the form');
+				});
+				jQuery('[name=message]').val() = '';
 			});
