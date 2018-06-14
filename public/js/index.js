@@ -7,10 +7,6 @@ var socket = io();
 				console.log('disconnected from server');
 			});
 
-			socket.on("newMessage", function(message){
-				console.log('new message:', message);
-			});
-			socket.emit('createMessage',{
-				to:'google@gmail.com',
-				text:"hello google"
+			socket.on('newMessage', function(message){
+				console.log(message);
 			});
