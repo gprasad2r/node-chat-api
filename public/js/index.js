@@ -8,8 +8,9 @@ var socket = io();
 			});
 
 			socket.on('newMessage', function(message){
+				var formattedtime = moment(message.createdAt).format('h:mm a');
 				var li = jQuery('<li></li>');
-				li.text(`${message.from} : ${message.to}`);
+				li.text(`${message.from} ${formattedtime} : ${message.to}`);
 				jQuery('#messages').append(li);
 			});
 
@@ -25,10 +26,11 @@ var socket = io();
 			});
 
 			socket.on('newLocationMessage', function(message){
+				var formattedtime = moment(message.createedAt).format('h: mm a')
 				var li = jQuery('<li></li>');
 				var a = jQuery('<a target="_blank">current location</a>');
 				a.attr('href',message.url);
-				li.text(`${message.from}`);
+				li.text(`${message.from} ${formattedtime}`);
 				li.append(a);
 				jQuery('#messages').append(li);
 				});
@@ -37,7 +39,7 @@ var socket = io();
 			locationButton.on('click', function () {
 				if(!navigator.geolocation){
 					return alert("yoour not supported");
-				}
+				} 
 				locationButton.attr('disabled', 'disabled').text('sending location');
 				navigator.geolocation.getCurrentPosition(function(position){
 						locationButton.removeAttr('disabled').text('send location');
