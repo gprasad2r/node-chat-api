@@ -22,7 +22,7 @@ io.on('connection', (socket)=>{
 		console.log(message);
 
 		io.emit('newMessage', generateMessage(message.from, message.to));
-		callback('this is from server');
+		callback();
 		// socket.broadcast.emit('newMessage', generateMessage(message.from, message.to));
 	});
 

@@ -20,7 +20,7 @@ var socket = io();
 					from :'user',
 					to:jQuery('[name=message]').val()
 				}, function(){
-					console.log('from the form');
+					to:jQuery('[name=message]').val('');
 				});
 			});
 
@@ -38,12 +38,15 @@ var socket = io();
 				if(!navigator.geolocation){
 					return alert("yoour not supported");
 				}
+				locationButton.attr('disabled', 'disabled').text('sending location');
 				navigator.geolocation.getCurrentPosition(function(position){
+						locationButton.removeAttr('disabled').text('send location');
 					socket.emit('createLocation', {
 						latitude:position.coords.latitude,
 						longitude:position.coords.longitude
 					});
 				}, function(position){
+					locationButton.removeAttr('disabled').text('send location');
 					alert('unable to fetch position');
 
 				});
